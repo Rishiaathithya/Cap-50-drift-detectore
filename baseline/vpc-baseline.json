@@ -1,0 +1,15 @@
+{
+  "resource_type": "SECURITY_GROUP",
+  "description": "Approved inbound rules for the demo web server",
+  "resources": [
+    {
+      "resource_id": "sg-demo-001",
+      "logical_name": "demo-web-security-group",
+      "vpc_id": "vpc-demo-001",
+      "inbound_rules": [
+        {"protocol": "tcp", "from_port": 80, "to_port": 80, "cidr": "0.0.0.0/0"}
+      ],
+      "comparison": {"ignore_fields": ["description"]}
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+import React from 'react'
+import {BrowserRouter,Routes,Route} from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar'
+import Dashboard from './pages/Dashboard'
+import Infrastructure from './pages/Infrastructure'
+import Approval from './pages/Approval'
+import ChangeJournal from './pages/ChangeJournal'
+import './styles.css'
+export default function App(){return <BrowserRouter><Navbar/><div className="layout"><Sidebar/><main className="content"><Routes><Route path="/" element={<Dashboard/>}/><Route path="/infrastructure" element={<Infrastructure/>}/><Route path="/approvals" element={<Approval/>}/><Route path="/journal" element={<ChangeJournal/>}/></Routes></main></div></BrowserRouter>}

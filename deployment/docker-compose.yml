@@ -1,0 +1,79 @@
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: cap50-mysql
+    restart: unless-stopped
+
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: cap50_db
+      MYSQL_USER: cap50_user
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    networks:
+      - cap50-network
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ../springboot-backend
+
+    container_name: cap50-backend
+    restart: unless-stopped
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/cap50_db
+      SPRING_DATASOURCE_USERNAME: cap50_user
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+    networks:
+      - cap50-network
+
+  python-engine:
+    build:
+      context: ../python-drift-engine
+
+    container_name: cap50-python
+    restart: unless-stopped
+
+    environment:
+      AWS_DEFAULT_REGION: eu-north-1
+
+    networks:
+      - cap50-network
+
+  frontend:
+    build:
+      context: ../react-frontend
+
+    container_name: cap50-frontend
+    restart: unless-stopped
+
+    ports:
+      - "80:80"
+
+    depends_on:
+      - backend
+
+    networks:
+      - cap50-network
+
+networks:
+  cap50-network:
+    driver: bridge
+
+volumes:
+  mysql_data:

@@ -1,0 +1,19 @@
+{
+  "resource_type": "EC2",
+  "description": "Approved EC2 configuration for the CAP-50 demo",
+  "resources": [
+    {
+      "resource_id": "i-0795e7540c48d9edd",
+      "logical_name": "demo-web-server",
+      "instance_type": "t2.micro",
+      "state": "running",
+      "required_tags": {
+        "Environment": "Development",
+        "ManagedBy": "CAP-50"
+      },
+      "comparison": {
+        "ignore_fields": ["launch_time", "private_ip_address", "public_ip_address", "instance_id"]
+      }
+    }
+  ]
+}

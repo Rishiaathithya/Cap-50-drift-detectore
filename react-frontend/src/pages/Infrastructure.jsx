@@ -1,0 +1,2 @@
+import React from 'react'
+export default function Infrastructure(){return <div className="page-head"><div><p className="eyebrow">AWS INVENTORY</p><h1>Infrastructure</h1><p className="muted">Initial prototype collectors: EC2 instances and VPC security groups.</p><div className="panel"><h3>Supported in this prototype</h3><p>EC2 instance type/state/tags and VPC security-group inbound rules.</p><h3>Extension points</h3><p>S3, IAM and Elastic Beanstalk baseline files and collector modules are included, but their live collection is not implemented yet.</p></div></div></div>}

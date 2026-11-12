@@ -1,0 +1,4 @@
+import React,{useEffect,useState} from 'react'
+import {getJournal} from '../services/api'
+export default function ChangeJournal(){const [rows,setRows]=useState([]),[error,setError]=useState('');useEffect(()=>{getJournal().then(r=>setRows(r.data)).catch(()=>setError('Could not load journal.'))},[])
+return <div><p className="eyebrow">AUDIT TRAIL</p><h1>Change journal</h1><p className="muted">Recorded detections, reviews and remediation events.</p>{error&&<div className="notice">{error}</div>}<div className="table-wrap"><table><thead><tr><th>Time</th><th>Resource</th><th>Event</th><th>Actor</th><th>Source</th></tr></thead><tbody>{rows.map(r=><tr key={r.id}><td>{r.createdAt?.replace('T',' ')}</td><td>{r.resourceType} / {r.resourceId}</td><td>{r.eventDescription}</td><td>{r.changedBy}</td><td>{r.changeSource}</td></tr>)}</tbody></table>{!rows.length&&<p className="empty">No journal events yet. Run a scan.</p>}</div></div>}

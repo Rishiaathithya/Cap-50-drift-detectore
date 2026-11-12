@@ -1,0 +1,5 @@
+{
+  "resource_type": "S3",
+  "description": "Extension point; add approved bucket policies and public-access settings here.",
+  "resources": []
+}
